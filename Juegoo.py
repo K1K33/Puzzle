@@ -57,8 +57,8 @@ def solve_puzzle(initial_state, goal_state):
     return None
 
 # Estado inicial y objetivo original
-initial_state = [['7', '2', '4'], ['5', '*', '6'], ['8', '3', '1']]
-goal_state = [['*', '1', '2'], ['3', '4', '5'], ['6', '7', '8']]
+initial_state = [['1', '3', '4'], ['8', '*', '2'], ['7', '6', '5']]
+goal_state = [['1', '2', '3'], ['8', '*', '4'], ['7', '6', '5']]
 
 initial_state = PuzzleState(initial_state, 0, calculate_manhattan_distance(initial_state, goal_state), None, "")
 goal_state = goal_state
@@ -74,12 +74,22 @@ if solution:
     path.reverse()
     for i, p in enumerate(path):
         if p.move:
-            print(f"Move {i}: {p.move}")
+            print(f"Mover {i}: {p.move}")
             moves_cost += 1
-            print("State:")
+            print("Estado:")
             for row in p.board:
                 print(row)
+            print("Posiciones finales:")
+            for row in range(3):
+                for col in range(3):
+                    if p.board[row][col] != '*':
+                        val = int(p.board[row][col])
+                        target_i, target_j = divmod(val - 1, 3)
+                        print(f"({target_i},{target_j})", end=" | ")
+                    else:
+                        print("(2,2)", end=" | ")  
+                print()
             print()
-    print(f"Total cost of moves: {moves_cost}")
+    print(f"Costo total de Movimientos: {moves_cost}")
 else:
-    print("No solution found for the puzzle.")
+    print("No hay solucion para este Puzzle.")
